@@ -25,6 +25,20 @@ body {
   font-family: var(--font-geist-mono), monospace;
 }
 
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(24, 24, 27, 0.45);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: rgba(56, 189, 248, 0.45);
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;

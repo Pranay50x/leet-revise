@@ -65,7 +65,7 @@ export default function Home() {
             <div className="flex flex-col gap-3 pt-2 sm:flex-row">
               <Link
                 className="rounded-xl bg-cyan-400 px-6 py-3 text-center text-sm font-semibold text-zinc-950 transition hover:bg-cyan-300"
-                href="/register"
+                href="/login"
               >
                 Start revising
               </Link>

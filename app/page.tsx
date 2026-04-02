@@ -1,6 +1,53 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? process.env.NEXTAUTH_URL ?? "http://localhost:3000";
+
+export const metadata: Metadata = {
+  title: "LeetCode Revision with Spaced Repetition",
+  description:
+    "Use LeetRevise to remember solved LeetCode questions with spaced repetition, adaptive intervals, and a revision calendar for coding interview prep.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "LeetCode Revision with Spaced Repetition | LeetRevise",
+    description:
+      "Build long-term recall for algorithms and data structures with a structured LeetCode revision system.",
+    url: "/",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "LeetCode Revision with Spaced Repetition",
+    description:
+      "Remember more LeetCode problems with smart revision intervals and daily review queues.",
+  },
+};
 
 export default function Home() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "LeetRevise",
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "Web",
+    url: siteUrl,
+    description:
+      "Spaced repetition app for LeetCode revision and coding interview preparation.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    keywords: [
+      "leetcode revision",
+      "spaced repetition leetcode",
+      "coding interview prep",
+      "dsa practice",
+    ],
+  };
+
   const cardAnimationClasses = [
     "animate-[rise-in_650ms_ease-out_220ms_both]",
     "animate-[rise-in_650ms_ease-out_310ms_both]",
@@ -156,6 +203,11 @@ export default function Home() {
           </ol>
         </section>
       </main>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
     </div>
   );
 }

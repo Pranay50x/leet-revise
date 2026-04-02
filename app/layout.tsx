@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? process.env.NEXTAUTH_URL ?? "http://localhost:3000";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -14,9 +16,54 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LeetRevise",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "LeetRevise | LeetCode Spaced Repetition for Interview Prep",
+    template: "%s | LeetRevise",
+  },
   description:
-    "Spaced repetition platform for LeetCode questions and coding interview prep.",
+    "LeetRevise helps you remember solved LeetCode questions using spaced repetition, adaptive revision intervals, and a focused interview prep workflow.",
+  applicationName: "LeetRevise",
+  keywords: [
+    "leetcode revision",
+    "spaced repetition leetcode",
+    "leetcode spaced repetition",
+    "coding interview prep",
+    "dsa revision",
+    "algorithm revision",
+    "retain leetcode problems",
+    "interview preparation",
+    "leetcode tracker",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "LeetRevise | LeetCode Spaced Repetition for Interview Prep",
+    description:
+      "Track solved LeetCode questions, revise with adaptive intervals, and improve long-term recall for coding interviews.",
+    url: "/",
+    siteName: "LeetRevise",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "LeetRevise | LeetCode Spaced Repetition",
+    description:
+      "Build long-term memory for LeetCode with spaced repetition and a revision calendar.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -29,8 +76,8 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <Analytics />
       <body className="min-h-full font-mono">
+        <Analytics />
         <div className="flex min-h-screen flex-col">
           <main className="flex-1">{children}</main>
           <footer className="border-t border-zinc-800 bg-[#06090f] px-6 py-4 text-sm text-zinc-400">

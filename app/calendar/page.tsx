@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 
 import { getServerSession } from "next-auth";
 
@@ -8,6 +9,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SignOutButton } from "@/app/dashboard/sign-out-button";
 import { authOptions } from "@/lib/auth-options";
+
+export const metadata: Metadata = {
+  title: "Revision Calendar",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function CalendarPage() {
   const session = await getServerSession(authOptions);

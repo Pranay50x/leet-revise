@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 
 import { getServerSession } from "next-auth";
 
@@ -8,6 +9,14 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/ca
 import { QuestionSearch } from "@/app/dashboard/question-search";
 import { SignOutButton } from "@/app/dashboard/sign-out-button";
 import { authOptions } from "@/lib/auth-options";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);

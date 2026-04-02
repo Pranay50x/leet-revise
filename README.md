@@ -1,66 +1,66 @@
 # LeetRevise
 
-LeetRevise is a full-stack Next.js application for tracking solved LeetCode problems with a spaced-repetition workflow. It combines authenticated user accounts, searchable question discovery, and a revision calendar that schedules and tracks review sessions.
+LeetRevise helps you retain solved LeetCode problems using a spaced-repetition workflow.
+It combines problem discovery, revision scheduling, and progress tracking in one place.
 
-## Features
+## Why This Project
 
-- Secure authentication with credentials-based sign in and registration.
-- Protected application routes for dashboard and calendar pages.
-- LeetCode problem search powered by LeetCode GraphQL APIs.
-- Latest-question feed when no search term is provided.
-- One-click "Solved Today" action to add a problem to revision schedule.
-- Difficulty-based default review intervals:
-	- Easy: day 3, day 6, day 9
-	- Medium: day 2, day 4, day 6
-	- Hard: day 1, day 2, day 3
-- Calendar view for month-wise revision planning.
-- Per-date completion tracking (Done +1) for each scheduled problem.
-- Edit and delete support for scheduled entries.
-- Duplicate protection for schedule entries at database level.
+Most interview prep workflows optimize for volume solved, not recall quality over time.
+LeetRevise focuses on long-term retention by turning each solved problem into a review plan that can be tracked and adjusted.
+
+## Highlights
+
+- Email/password authentication with protected app routes
+- LeetCode search integration via GraphQL
+- One-click add to revision schedule from dashboard
+- Difficulty-aware default review intervals
+- Monthly revision calendar with completion counters
+- Edit and delete flows for scheduled entries
+- Duplicate schedule protection with database-level constraints
+
+## Review Interval Strategy
+
+Default intervals are generated from problem difficulty:
+
+- Easy: day 3, day 6, day 9
+- Medium: day 2, day 4, day 6
+- Hard: day 1, day 2, day 3
 
 ## Tech Stack
 
-- Framework: Next.js 16 (App Router)
-- Language: TypeScript
-- UI: React 19 + Tailwind CSS 4 + Radix UI primitives
-- Authentication: NextAuth (Credentials Provider)
-- Database: MongoDB (official Node.js driver)
-- Password hashing: bcryptjs
+| Layer | Technology |
+| --- | --- |
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript |
+| UI | React 19, Tailwind CSS 4, Radix UI |
+| Auth | NextAuth (Credentials Provider) |
+| Data Store | MongoDB |
+| Security | bcryptjs for password hashing |
 
-## Application Structure
+## Repository Layout
 
-- app: App Router pages and API routes
-- app/dashboard: Search and schedule workflows
-- app/calendar: Revision calendar experience
-- app/api/auth: Registration and NextAuth handlers
-- app/api/leetcode/questions: LeetCode question retrieval endpoint
-- app/api/revision/schedule: Schedule CRUD and progress updates
-- lib: Domain and infrastructure modules (MongoDB, auth options, scheduling logic)
-- components/ui: Reusable UI primitives
+| Path | Purpose |
+| --- | --- |
+| app | App Router pages and API handlers |
+| app/dashboard | Search + add solved question workflow |
+| app/calendar | Calendar-based revision management |
+| app/api/auth | Registration and NextAuth routes |
+| app/api/leetcode/questions | LeetCode query endpoint |
+| app/api/revision/schedule | Schedule list/create/update/delete |
+| lib | Business logic and infrastructure modules |
+| components/ui | Reusable UI components |
 
-## Core Workflow
+## Product Flow
 
-1. User registers or signs in.
-2. User searches LeetCode questions from dashboard.
-3. User marks a solved problem with "Solved Today".
-4. Service generates review dates based on difficulty.
-5. User tracks and updates review completion in calendar.
-
-## Data and Scheduling Model
-
-Each revision entry stores:
-
-- Question metadata (title, slug, difficulty, acceptance rate, tags)
-- Solved date
-- Planned review date keys (YYYY-MM-DD)
-- Per-date completion counts
-- Created and updated timestamps
-
-Database indexing enforces uniqueness per user and problem slug to prevent duplicate schedule rows.
+1. Create an account or sign in.
+2. Search for solved LeetCode questions.
+3. Add a solved question to the revision plan.
+4. Let the app generate review dates.
+5. Track and update completion from the calendar.
 
 ## Environment Variables
 
-Create a .env.local file in the project root with:
+Create .env.local in the project root:
 
 ```env
 MONGODB_URI=<your-mongodb-connection-string>
@@ -69,13 +69,13 @@ NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=<long-random-secret>
 ```
 
-Production notes:
+Notes:
 
-- Set NEXTAUTH_URL to your production domain.
-- Rotate any exposed database credentials immediately.
-- Do not commit .env.local.
+- Use your deployed domain for NEXTAUTH_URL in production.
+- Never commit secrets.
+- If credentials were exposed, rotate them immediately.
 
-## Local Development
+## Local Setup
 
 Install dependencies:
 
@@ -83,7 +83,7 @@ Install dependencies:
 npm install
 ```
 
-Run development server:
+Start development server:
 
 ```bash
 npm run dev
@@ -95,54 +95,69 @@ Build for production:
 npm run build
 ```
 
-Start production server locally:
+Run production build locally:
 
 ```bash
 npm run start
 ```
 
-Lint:
+Run lint checks:
 
 ```bash
 npm run lint
 ```
 
-## API Endpoints
+## API Overview
 
-- POST /api/auth/register
-	- Registers a new user with name, email, and password.
-- GET, POST /api/auth/[...nextauth]
-	- NextAuth handlers for credentials auth flows.
-- GET /api/leetcode/questions
-	- Fetches latest or query-filtered LeetCode questions.
-- GET /api/revision/schedule
-	- Returns current user revision schedule.
-- POST /api/revision/schedule
-	- Adds solved question to schedule.
-- PATCH /api/revision/schedule
-	- Supports increment-done, update-entry, and delete-entry actions.
+| Method | Route | Description |
+| --- | --- | --- |
+| POST | /api/auth/register | Register a new user |
+| GET, POST | /api/auth/[...nextauth] | NextAuth handlers |
+| GET | /api/leetcode/questions | Fetch latest or searched questions |
+| GET | /api/revision/schedule | List current user schedule |
+| POST | /api/revision/schedule | Add solved question to schedule |
+| PATCH | /api/revision/schedule | increment-done, update-entry, delete-entry |
 
-## Deployment to Vercel
+## Deployment
 
-1. Import the repository into Vercel.
-2. Add required environment variables in project settings:
-	 - MONGODB_URI
-	 - MONGODB_DB
-	 - NEXTAUTH_URL
-	 - NEXTAUTH_SECRET
-3. Deploy using the default Next.js build command.
-4. Verify authentication callbacks and protected routes after deployment.
+### Vercel
+
+1. Import this repository into Vercel.
+2. Configure environment variables:
+   - MONGODB_URI
+   - MONGODB_DB
+   - NEXTAUTH_URL
+   - NEXTAUTH_SECRET
+3. Deploy with default Next.js settings.
+4. Validate login, protected routes, and revision APIs after release.
 
 ## Validation Checklist
 
-- User registration succeeds.
-- User sign in redirects to dashboard.
-- Question search returns results.
-- "Solved Today" creates schedule entry.
-- Calendar shows planned review dates.
-- Done +1 updates completion counts.
-- Edit and delete actions persist correctly.
+- Registration and login work end-to-end.
+- Authenticated users reach dashboard and calendar.
+- Search results load from LeetCode API.
+- Solved questions create schedule entries.
+- Calendar renders correct monthly due items.
+- Completion increments persist.
+- Edit/delete schedule operations persist.
+
+## Contributing
+
+Contributions are welcome. For significant changes, please open an issue first to discuss scope and approach.
+
+Recommended contribution workflow:
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Keep pull requests focused and small.
+4. Include clear reproduction or validation steps.
+
+## Security
+
+If you discover a security issue, avoid opening a public issue with sensitive details.
+Share a private report with maintainers so the issue can be triaged and patched responsibly.
 
 ## License
 
-This project is currently unlicensed. Add a LICENSE file if distribution terms are required.
+This repository is currently unlicensed.
+If you plan to accept external contributions, add a LICENSE file before broad distribution.

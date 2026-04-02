@@ -28,7 +28,37 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-mono">{children}</body>
+      <body className="min-h-full font-mono">
+        <div className="flex min-h-screen flex-col">
+          <main className="flex-1">{children}</main>
+          <footer className="border-t border-zinc-800 bg-[#06090f] px-6 py-4 text-sm text-zinc-400">
+            <div className="mx-auto flex w-full max-w-7xl flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+              <p>
+                Made by{" "}
+                <a
+                  href="https://pranay50x.vercel.app"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-cyan-300 hover:text-cyan-200"
+                >
+                  Pranay50X
+                </a>
+              </p>
+              <p>
+                Source code:{" "}
+                <a
+                  href="https://github.com/Pranay50x/leet-revise/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-cyan-300 hover:text-cyan-200"
+                >
+                  github.com/Pranay50x/leet-revise
+                </a>
+              </p>
+            </div>
+          </footer>
+        </div>
+      </body>
     </html>
   );
 }

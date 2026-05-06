@@ -9,7 +9,7 @@ type RegisterPayload = {
   password?: string;
 };
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@.]+\.[^\s@]+$/;
 
 function asDuplicateKeyError(error: unknown): { code?: number } | null {
   if (typeof error === "object" && error !== null && "code" in error) {

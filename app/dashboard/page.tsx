@@ -42,6 +42,7 @@ export default async function DashboardPage() {
             </CardDescription>
           </div>
           <div className="flex items-center gap-3">
+            <Link href="/schedule"><Button variant="outline" size="sm">Review Schedule</Button></Link>
             <Link href="/calendar"><Button>Calendar</Button></Link>
             <Link href="/"><Button variant="outline">Home</Button></Link>
             <SignOutButton />
